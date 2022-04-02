@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   nginx:
+    container_name: nginx
     depends_on:
       - backend
       - frontend
@@ -9,8 +10,11 @@ services:
       dockerfile: Dockerfile
       context: ./nginx
     ports:
-      - "3050:80"
+      - "3001:80"
+    networks:
+      - fullstack-app
   frontend:
+    container_name: frontend
     stdin_open: true
     build: 
       context: ./frontend
@@ -22,6 +26,7 @@ services:
     networks:
       - fullstack-app
   backend:
+    container_name: backend
     restart: unless-stopped
     build: 
       context: ./backend
@@ -35,6 +40,7 @@ services:
     networks:
       - fullstack-app
   postgres:
+    container_name: postgres
     image: postgres:14-alpine
     restart: always
     ports:
