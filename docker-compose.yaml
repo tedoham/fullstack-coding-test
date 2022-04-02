@@ -1,0 +1,50 @@
+version: '3.9'
+services:
+  nginx:
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3050:80"
+  frontend:
+    stdin_open: true
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - fullstack-app
+  backend:
+    restart: unless-stopped
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_SOURCE=postgresql://root:secret@postgres:5432/products?sslmode=disable
+    depends_on:
+      - postgres
+    networks:
+      - fullstack-app
+  postgres:
+    image: postgres:14-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=products
+    networks:
+      - fullstack-app
+networks:
+  fullstack-app:
+    driver: bridge
