@@ -14,9 +14,9 @@ migratedown:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/products?sslmode=disable" -verbose down
 
 test:
-	cd backend && go test -v -cover ./...
+	go test -v -cover ./...
 
 mock:
-	cd backend && mockgen -package mock --destination service/mocks/mock.go github.com/tedoham/fullstack-coding-test/service ProductService 
+	mockgen -package mock --destination service/mocks/mock.go github.com/tedoham/fullstack-coding-test/service ProductService 
 
 .PHONY: postgres createdb dropdb migrateup migratedown test mock
