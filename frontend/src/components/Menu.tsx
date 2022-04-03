@@ -6,7 +6,7 @@ interface MenuType {
     productId: string
 }
 
-const baseURLForUpdate = "http://localhost:8080/product";
+const baseURLForUpdate = "http://localhost:8000/product";
 
 export default function Menu({showMenu, productId}: MenuType) {
 

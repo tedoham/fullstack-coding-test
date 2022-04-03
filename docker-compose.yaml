@@ -1,5 +1,49 @@
 version: '3.9'
 services:
+
+  postgres:
+    container_name: postgres
+    image: postgres:14-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=products
+    networks:
+      - fullstack-app
+  
+  backend:
+    container_name: backend
+    restart: unless-stopped
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_SOURCE=postgresql://root:secret@postgres:5432/products?sslmode=disable
+    depends_on:
+      - postgres
+    # entrypoint: [ "/app/wait-for.sh", "postgres:5432", "--", "/app/start.sh" ]
+    command: [ "/app/main" ]
+    networks:
+      - fullstack-app
+
+  frontend:
+    container_name: frontend
+    stdin_open: true
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - fullstack-app
+
   nginx:
     container_name: nginx
     depends_on:
@@ -13,44 +57,7 @@ services:
       - "3001:80"
     networks:
       - fullstack-app
-  frontend:
-    container_name: frontend
-    stdin_open: true
-    build: 
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    networks:
-      - fullstack-app
-  backend:
-    container_name: backend
-    restart: unless-stopped
-    build: 
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    environment:
-      - DB_SOURCE=postgresql://root:secret@postgres:5432/products?sslmode=disable
-    depends_on:
-      - postgres
-    networks:
-      - fullstack-app
-  postgres:
-    container_name: postgres
-    image: postgres:14-alpine
-    restart: always
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=products
-    networks:
-      - fullstack-app
+
 networks:
   fullstack-app:
     driver: bridge

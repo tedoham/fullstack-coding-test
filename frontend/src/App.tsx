@@ -4,7 +4,7 @@ import './App.css'
 import Menu from './components/Menu';
 import ProductDetail from './components/ProductDetail';
 
-const baseURL = "http://localhost:8080/products";
+const baseURL = "http://localhost:8000/products";
 
 function App() {
   const [menuStatus, setMenuStatus] = useState(false);

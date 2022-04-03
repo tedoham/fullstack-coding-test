@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-const baseURL = "http://localhost:8080/product";
+const baseURL = "http://localhost:8000/product";
 
 interface DetailType {
     productId: string
