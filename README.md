@@ -1,15 +1,5 @@
 # check this video for demo https://www.loom.com/share/cfbdc18c78c3429ba8f9e99831f32449
 
-# Xendit Coding Exercise
-
-The goal of these exercises are to assess your proficiency in software engineering that is related to the daily work that we do at Xendit. Please follow the instructions below to complete the assessment.
-
-## How this exercise is assessed
-
-Create a new repository in your own github profile named `fullstack-coding-test`.  
-Share the link with the interviewing team for review.
-Also include this Readme file in the root of your project.
-
 ## Tasks
 
 Below will be your set of tasks to accomplish. This assignment is to build a dashboard for admins to manage their customer's product shipment status. You do not have to complete the tasks in order, but please state clearly in your PR what is solved. You are encouraged to use Golang + React for this assignment.
