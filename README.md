@@ -1,4 +1,6 @@
-# check this video for demo https://www.loom.com/share/cfbdc18c78c3429ba8f9e99831f32449
+# check this video for demo 
+
+https://www.loom.com/share/cfbdc18c78c3429ba8f9e99831f32449
 
 ## Tasks
 
